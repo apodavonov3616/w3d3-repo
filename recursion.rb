@@ -126,10 +126,12 @@ def subsets(array) #if array is 1,2
 
 end
 
+require 'byebug'
 def permutations(array)
   return array if array.length == 1
   answer = []
   last = array[-1]
+  debugger
   permutations(array[0...-1]).each do |mini_array|
     #mini array is [2,1] and another is [1,2]
     (0..mini_array.length).each do |idx|
