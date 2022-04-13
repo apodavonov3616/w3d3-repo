@@ -53,8 +53,8 @@ class Array
   end
 end
 
-example = [1, [2], [3, [4]]]
-p example.deepdup
+# example = [1, [2], [3, [4]]]
+# p example.deepdup
 
 def fibonacci(n)
   return [] if n == 0
@@ -69,6 +69,16 @@ end
 
 def bsearch(array, target)
   halfidx = array.length / 2
+  left = array[0...halfidx]
+  right = array[halfidx..-1]
+  return nil if halfidx == 0 && array[halfidx] != target
+  if array[halfidx] > target
+    bsearch(left, target)
+  elsif array[halfidx] < target
+    left.length + bsearch(right, target) if bsearch(right, target)!= nil
+  else
+    return halfidx if array[halfidx] == target
+  end
 end
 
 # p bsearch([1, 2, 3], 1) # => 0
@@ -78,3 +88,30 @@ end
 # p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
 # p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
 # p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+
+def merge(arr1, arr2)
+  new_arr = []
+  while arr1.length != 0 && arr2.length !=0
+    if arr1[0] < arr2[0] || arr2.length == 0
+      new_arr << arr1.shift
+    else 
+      new_arr << arr2.shift 
+    end
+  end
+  new_arr
+end
+
+
+require 'byebug'
+def merge_sort(array)
+  # debugger
+  # return [] if array.length == 0 
+  return array if array.length == 1
+  half_idx = array.length / 2
+  left = array[0...half_idx]
+  right = array[half_idx..-1]
+  merge(merge_sort(left), merge_sort(right))
+end
+
+array = [38,27,43,3,9,82,10]
+p merge_sort(array)
