@@ -89,23 +89,19 @@ end
 # p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
 # p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
 
-def merge(arr1, arr2)
-  new_arr = []
-  while arr1.length != 0 && arr2.length !=0
-    if arr1[0] < arr2[0] || arr2.length == 0
-      new_arr << arr1.shift
+def merge(left, right)
+  merged = []
+  until left.empty? || right.empty?
+    if left[0] < right[0]
+      merged << left.shift
     else 
-      new_arr << arr2.shift 
+      merged << right.shift
     end
   end
-  new_arr
+  merged + left + right
 end
 
-
-require 'byebug'
 def merge_sort(array)
-  # debugger
-  # return [] if array.length == 0 
   return array if array.length == 1
   half_idx = array.length / 2
   left = array[0...half_idx]
@@ -113,5 +109,17 @@ def merge_sort(array)
   merge(merge_sort(left), merge_sort(right))
 end
 
-array = [38,27,43,3,9,82,10]
-p merge_sort(array)
+# array = [-1231, 12312, 231, 231, 1, 26, 8, 123, 20]
+# p merge_sort(array)
+
+def subsets(array)
+  return [] if array.empty?
+  return array if array.length == 1
+  sets = []
+end
+
+p subsets([]) # => [[]]
+p subsets([1]) # => [[], [1]]
+p subsets([1, 2]) # => [[], [1], [2], [1, 2]]
+p subsets([1, 2, 3])
+# => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
