@@ -35,23 +35,26 @@ end
 
 # p exponentiationv2(2, 3)
 
-def deepdup(arr)
-  return arr if !arr.is_a?(Array)
+class Array
+  def deepdup
+    return self if !self.is_a?(Array)
 
-  newarr = []
+    newarr = []
 
-  arr.each do |subarr|
-    newarr << deepdup(subarr)
+    self.each do |subarr|
+      if subarr.is_a?(Array)
+        newarr << subarr.deepdup 
+      else
+        newarr << subarr
+      end
+    end
+
+    newarr
   end
-
-  newarr
 end
 
-# example = [1, [2], [3, [4]]]
-# newexample = deepdup(example)
-# newexample[1] << 5
-# p example
-# p newexample
+example = [1, [2], [3, [4]]]
+p example.deepdup
 
 def fibonacci(n)
   return [] if n == 0
@@ -68,10 +71,10 @@ def bsearch(array, target)
   halfidx = array.length / 2
 end
 
-p bsearch([1, 2, 3], 1) # => 0
-p bsearch([2, 3, 4, 5], 3) # => 1
-p bsearch([2, 4, 6, 8, 10], 6) # => 2
-p bsearch([1, 3, 4, 5, 9], 5) # => 3
-p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
-p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
-p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+# p bsearch([1, 2, 3], 1) # => 0
+# p bsearch([2, 3, 4, 5], 3) # => 1
+# p bsearch([2, 4, 6, 8, 10], 6) # => 2
+# p bsearch([1, 3, 4, 5, 9], 5) # => 3
+# p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+# p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+# p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
