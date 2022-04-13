@@ -112,14 +112,41 @@ end
 # array = [-1231, 12312, 231, 231, 1, 26, 8, 123, 20]
 # p merge_sort(array)
 
-def subsets(array)
-  return [] if array.empty?
-  return array if array.length == 1
-  sets = []
+def subsets(array) #if array is 1,2
+  return [[]] if array.empty?
+
+  saved = subsets(array[0...-1])  # => [[], [1], [2], [1, 2]]
+
+
+  saved.each do |ele|
+    ele << array[-1]
+  end
+
+  subsets(array[0...-1]) + saved
+
 end
 
-p subsets([]) # => [[]]
-p subsets([1]) # => [[], [1]]
-p subsets([1, 2]) # => [[], [1], [2], [1, 2]]
-p subsets([1, 2, 3])
+def permutations(array)
+  return array if array.length == 1
+  answer = []
+  last = array[-1]
+  permutations(array[0...-1]).each do |mini_array|
+    #mini array is [2,1] and another is [1,2]
+    (0..mini_array.length).each do |idx|
+      saved = mini_array
+      if idx == mini_array.length
+        saved.push(last)
+      else
+        saved.insert(idx, last)
+      end
+      answer << saved
+    end
+  end
+end
+
+# p subsets([]) # => [[]]
+# p subsets([1]) # => [[], [1]]
+# p subsets([1, 2]) # => [[], [1], [2], [1, 2]]
+# p subsets([1, 2, 3, 4, 5, 6])
 # => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+p permutations([1, 2, 3])
